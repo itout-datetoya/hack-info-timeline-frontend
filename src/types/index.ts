@@ -1,13 +1,24 @@
 export interface Tag {
-  id: string;
-  name: string;
+  ID:   string;
+  Name: string;
 }
 
-export interface Incident {
-  id: string;
-  title: string;
-  summary: string;
-  source_url: string;
-  reported_at: string; // ISO 8601 形式の文字列
-  tags: Tag[] | null;
+export interface HackingInfo {
+  ID:         string;
+  Protocol:   string;
+  Network:    string;
+  Amount:     string;
+  TxHash:     string;
+  ReportTime: string;
+  Tags:       Tag[] | null;
+}
+
+export interface TransferInfo {
+  ID:         string;
+	Token:      string;
+	Amount:     string;
+	From:		    string;
+  To:         string;
+  ReportTime: string;
+  Tags:       Tag[] | null;
 }

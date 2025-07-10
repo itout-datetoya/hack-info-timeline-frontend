@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import apiClient from '../api/apiClient';
-import { Tag, HackingInfo } from '../types';
+import { Tag, TransferInfo } from '../types';
 import { Icon } from './Icon';
-import { IncidentCard } from './IncidentCard';
+import { TransferCard } from './TransferCard';
 
 const ITEMS_PER_PAGE = 20;
 
-export const HackingTimeline: React.FC = () => {
+export const TransferTimeline: React.FC = () => {
   const [allTags, setAllTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
-  const [incidents, setIncidents] = useState<HackingInfo[]>([]);
+  const [transfers, setTransfers] = useState<TransferInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,7 @@ export const HackingTimeline: React.FC = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await apiClient.get<Tag[]>('/hacking/tags');
+        const response = await apiClient.get<Tag[]>('/transfer/tags');
         setAllTags(response.data || []);
       } catch (err) {
         console.error("Failed to fetch tags:", err);
@@ -58,12 +58,12 @@ export const HackingTimeline: React.FC = () => {
       }
       params.append('infoNumber', ITEMS_PER_PAGE.toString());
 
-      const response = await apiClient.get<HackingInfo[]>('/hacking/latest-infos', { params });
+      const response = await apiClient.get<TransferInfo[]>('/transfer/latest-infos', { params });
       const data = response.data || [];
-      setIncidents(data);
+      setTransfers(data);
 
       if (data.length > 0) {
-        const minId = Math.min(...data.map(inc => parseInt(inc.ID, 10))).toString();
+        const minId = Math.min(...data.map(t => parseInt(t.ID, 10))).toString();
         setPrevInfoID(minId);
         setHasMore(data.length === ITEMS_PER_PAGE);
       } else {
@@ -71,7 +71,7 @@ export const HackingTimeline: React.FC = () => {
         setHasMore(false);
       }
     } catch (err) {
-      console.error("Failed to fetch latest incidents:", err);
+      console.error("Failed to fetch latest transfers:", err);
       setError('情報の取得に失敗しました。');
     } finally {
       setIsLoading(false);
@@ -91,20 +91,20 @@ export const HackingTimeline: React.FC = () => {
         params.append('prevInfoID', prevInfoID);
         params.append('infoNumber', ITEMS_PER_PAGE.toString());
 
-        const response = await apiClient.get<HackingInfo[]>('/hacking/prev-infos', { params });
+        const response = await apiClient.get<TransferInfo[]>('/transfer/prev-infos', { params });
         const newData = response.data || [];
 
-        setIncidents(prevIncidents => [...prevIncidents, ...newData]);
+        setTransfers(prevTransfers => [...prevTransfers, ...newData]);
 
         if (newData.length > 0) {
-            const minId = Math.min(...newData.map(inc => parseInt(inc.ID, 10))).toString();
+            const minId = Math.min(...newData.map(t => parseInt(t.ID, 10))).toString();
             setPrevInfoID(minId);
             setHasMore(newData.length === ITEMS_PER_PAGE);
         } else {
             setHasMore(false);
         }
     } catch (err) {
-      console.error("Failed to fetch previous incidents:", err);
+      console.error("Failed to fetch previous transfers:", err);
       setError('追加情報の取得に失敗しました。');
     } finally {
       setIsLoadingMore(false);
@@ -185,8 +185,8 @@ export const HackingTimeline: React.FC = () => {
       <section>
         {error && <div className="bg-red-900/50 border border-red-500 text-red-300 px-4 py-3 rounded-lg text-center"><p>{error}</p></div>}
         <div className="space-y-6">
-          {incidents.map(incident => (
-            <IncidentCard key={incident.ID} incident={incident} />
+          {transfers.map(transfer => (
+            <TransferCard key={transfer.ID} transfer={transfer} />
           ))}
         </div>
         {hasMore && !isLoading && (
@@ -196,7 +196,7 @@ export const HackingTimeline: React.FC = () => {
             </button>
           </div>
         )}
-        {!isLoading && incidents.length === 0 && !isInitialLoad && !error && (
+        {!isLoading && transfers.length === 0 && !isInitialLoad && !error && (
           <div className="text-center py-10 bg-gray-800/30 rounded-lg">
             <p className="text-gray-500">該当する情報はありません。</p>
           </div>
@@ -210,4 +210,3 @@ export const HackingTimeline: React.FC = () => {
     </div>
   );
 };
-

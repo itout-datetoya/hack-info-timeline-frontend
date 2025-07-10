@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { HackingTimeline } from './components/HackingTimeline';
+import { TransferTimeline } from './components/TransferTimeline';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('hacking');
 
   const tabs = [
-    { id: 'hacking', label: 'ハッキング情報' },
-    { id: 'scams', label: 'スキャム情報 (予定)' },
+    { id: 'hacking', label: 'ハッキング' },
+    { id: 'transfers', label: '不審な送金' },
   ];
 
   return (
     <div className="text-gray-200 min-h-screen font-sans antialiased">
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-cyan-400 tracking-wider">DeFi Intel Timeline</h1>
-          <p className="text-gray-400 mt-2">分散型金融のセキュリティインシデントを追跡</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-cyan-400 tracking-wider">Hacking Infomation Timeline</h1>
+          <p className="text-gray-400 mt-2">ハッキング情報 タイムライン</p>
         </header>
 
         <div className="mb-8 border-b border-gray-700">
@@ -37,9 +38,10 @@ export const App: React.FC = () => {
 
         <main>
           {activeTab === 'hacking' && <HackingTimeline />}
-          {activeTab === 'scams' && <div className="text-center py-10 text-gray-500">この機能は現在準備中です。</div>}
+          {activeTab === 'transfers' && <TransferTimeline />}
         </main>
       </div>
     </div>
   );
 }
+
