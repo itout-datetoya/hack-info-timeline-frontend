@@ -24,7 +24,7 @@ export const TransferTimeline: React.FC = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await apiClient.get<Tag[]>('/transfer/tags');
+        const response = await apiClient.get<Tag[]>('/v1/transfer/tags');
         setAllTags(response.data || []);
       } catch (err) {
         console.error("Failed to fetch tags:", err);
@@ -58,7 +58,7 @@ export const TransferTimeline: React.FC = () => {
       }
       params.append('infoNumber', ITEMS_PER_PAGE.toString());
 
-      const response = await apiClient.get<TransferInfo[]>('/transfer/latest-infos', { params });
+      const response = await apiClient.get<TransferInfo[]>('/v1/transfer/latest-infos', { params });
       const data = response.data || [];
       setTransfers(data);
 
@@ -91,7 +91,7 @@ export const TransferTimeline: React.FC = () => {
         params.append('prevInfoID', prevInfoID);
         params.append('infoNumber', ITEMS_PER_PAGE.toString());
 
-        const response = await apiClient.get<TransferInfo[]>('/transfer/prev-infos', { params });
+        const response = await apiClient.get<TransferInfo[]>('/v1/transfer/prev-infos', { params });
         const newData = response.data || [];
 
         setTransfers(prevTransfers => [...prevTransfers, ...newData]);

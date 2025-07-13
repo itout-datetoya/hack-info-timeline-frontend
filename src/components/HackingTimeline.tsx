@@ -24,7 +24,7 @@ export const HackingTimeline: React.FC = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await apiClient.get<Tag[]>('/hacking/tags');
+        const response = await apiClient.get<Tag[]>('/v1/hacking/tags');
         setAllTags(response.data || []);
       } catch (err) {
         console.error("Failed to fetch tags:", err);
@@ -58,7 +58,7 @@ export const HackingTimeline: React.FC = () => {
       }
       params.append('infoNumber', ITEMS_PER_PAGE.toString());
 
-      const response = await apiClient.get<HackingInfo[]>('/hacking/latest-infos', { params });
+      const response = await apiClient.get<HackingInfo[]>('/v1/hacking/latest-infos', { params });
       const data = response.data || [];
       setIncidents(data);
 
@@ -91,7 +91,7 @@ export const HackingTimeline: React.FC = () => {
         params.append('prevInfoID', prevInfoID);
         params.append('infoNumber', ITEMS_PER_PAGE.toString());
 
-        const response = await apiClient.get<HackingInfo[]>('/hacking/prev-infos', { params });
+        const response = await apiClient.get<HackingInfo[]>('/v1/hacking/prev-infos', { params });
         const newData = response.data || [];
 
         setIncidents(prevIncidents => [...prevIncidents, ...newData]);
