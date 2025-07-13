@@ -14,7 +14,20 @@ export const TransferCard: React.FC<TransferCardProps> = ({ transfer }) => {
     });
   };
 
-  const getAddressUrl = (address: string) => `https://etherscan.io/address/${address}`;
+const AddressDisplay: React.FC<{ address: string }> = ({ address }) => {
+  const isAddress = address.startsWith('0x');
+  const getAddressUrl = (addr: string) => `https://etherscan.io/address/${addr}`;
+
+  if (isAddress) {
+    return (
+      <a href={getAddressUrl(address)} target="_blank" rel="noopener noreferrer" className="font-mono text-blue-400 hover:underline truncate">
+        {address}
+      </a>
+    );
+  }
+
+  return <span className="font-medium text-gray-200">{address}</span>;
+};
 
   return (
     <article className="bg-gray-800 p-5 rounded-lg border border-gray-700 shadow-lg hover:border-teal-500/50 transition-all duration-300">
@@ -31,11 +44,11 @@ export const TransferCard: React.FC<TransferCardProps> = ({ transfer }) => {
       <div className="space-y-3 text-sm">
         <div className="flex items-center gap-3">
             <span className="text-gray-500 w-12">From:</span>
-            <a href={getAddressUrl(transfer.From)} target="_blank" rel="noopener noreferrer" className="font-mono text-blue-400 hover:underline truncate">{transfer.From}</a>
+            <AddressDisplay address={transfer.From} />
         </div>
         <div className="flex items-center gap-3">
             <span className="text-gray-500 w-12">To:</span>
-            <a href={getAddressUrl(transfer.To)} target="_blank" rel="noopener noreferrer" className="font-mono text-blue-400 hover:underline truncate">{transfer.To}</a>
+            <AddressDisplay address={transfer.To} />
         </div>
       </div>
       
