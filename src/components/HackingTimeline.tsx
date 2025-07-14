@@ -60,6 +60,7 @@ export const HackingTimeline: React.FC = () => {
 
       const response = await apiClient.get<HackingInfo[]>('/v1/hacking/latest-infos', { params });
       const data = response.data || [];
+      data.sort((a, b) => new Date(b.ReportTime).getTime() - new Date(a.ReportTime).getTime());
       setIncidents(data);
 
       if (data.length > 0) {
