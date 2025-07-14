@@ -94,7 +94,7 @@ export const HackingTimeline: React.FC = () => {
 
         const response = await apiClient.get<HackingInfo[]>('/v1/hacking/prev-infos', { params });
         const newData = response.data || [];
-
+        newData.sort((a, b) => new Date(b.ReportTime).getTime() - new Date(a.ReportTime).getTime());
         setIncidents(prevIncidents => [...prevIncidents, ...newData]);
 
         if (newData.length > 0) {

@@ -94,7 +94,7 @@ export const TransferTimeline: React.FC = () => {
 
         const response = await apiClient.get<TransferInfo[]>('/v1/transfer/prev-infos', { params });
         const newData = response.data || [];
-
+        newData.sort((a, b) => new Date(b.ReportTime).getTime() - new Date(a.ReportTime).getTime());
         setTransfers(prevTransfers => [...prevTransfers, ...newData]);
 
         if (newData.length > 0) {
