@@ -14,10 +14,14 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident }) => {
     });
   };
 
-  // トランザクションハッシュからblockscanのURLを生成（簡易版）
+  // トランザクションハッシュまたはアドレスからblockscanのURLを生成（簡易版）
   const getTxUrl = (network: string, txHash: string) => {
-    // ネットワークに応じてURLを切り替えることも可能
-    return `https://blockscan.com/tx/${txHash}`;
+    // txHashの長さに応じてURLを切り替え
+    if (txHash.length == 42) {
+      return `https://blockscan.com/address/${txHash}`;
+    } else {
+      return `https://blockscan.com/tx/${txHash}`;
+    }
   };
 
   return (
@@ -54,7 +58,7 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident }) => {
           rel="noopener noreferrer" 
           className="text-blue-400 hover:text-blue-300 text-sm ml-auto flex items-center gap-1 hover:underline"
         >
-          Tx Details
+          Details
           <Icon path="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" className="w-4 h-4" />
         </a>
       </footer>
