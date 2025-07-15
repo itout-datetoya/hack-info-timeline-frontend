@@ -14,10 +14,10 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident }) => {
     });
   };
 
-  // トランザクションハッシュからEtherscanのURLを生成（簡易版）
+  // トランザクションハッシュからblockscanのURLを生成（簡易版）
   const getTxUrl = (network: string, txHash: string) => {
     // ネットワークに応じてURLを切り替えることも可能
-    return `https://etherscan.io/tx/${txHash}`;
+    return `https://blockscan.com/tx/${txHash}`;
   };
 
   return (

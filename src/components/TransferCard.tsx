@@ -16,7 +16,7 @@ export const TransferCard: React.FC<TransferCardProps> = ({ transfer }) => {
 
 const AddressDisplay: React.FC<{ address: string }> = ({ address }) => {
   const isAddress = address.startsWith('0x');
-  const getAddressUrl = (addr: string) => `https://etherscan.io/address/${addr}`;
+  const getAddressUrl = (addr: string) => `https://blockscan.com/address/${addr}`;
 
   if (isAddress) {
     return (
