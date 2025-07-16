@@ -14,8 +14,7 @@ export const App: React.FC = () => {
     <div className="text-gray-200 min-h-screen font-sans antialiased">
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-cyan-400 tracking-wider">Hacking Infomation Timeline</h1>
-          <p className="text-gray-400 mt-2">ハッキング情報 タイムライン</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-cyan-400 tracking-wider">Hacking Information Timeline</h1>
         </header>
 
         <div className="mb-8 border-b border-gray-700">
