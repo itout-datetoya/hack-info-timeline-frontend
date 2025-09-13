@@ -10,15 +10,17 @@ export interface HackingInfo {
   Amount:     string;
   TxHash:     string;
   ReportTime: string;
+  MessageID:  string;
   Tags:       Tag[] | null;
 }
 
 export interface TransferInfo {
   ID:         string;
-	Token:      string;
-	Amount:     string;
-	From:		    string;
+  Token:      string;
+  Amount:     string;
+  From:		    string;
   To:         string;
   ReportTime: string;
+  MessageID:  string;
   Tags:       Tag[] | null;
 }
